@@ -1,0 +1,1 @@
+Delete this line after you have at least one registered user : Also make sure not to delete the blank line : It could make the script stop working.
