@@ -47,17 +47,18 @@ with open("users.txt", "r") as f:
 
         with open("users.txt", "r") as check:                                                                               # Checking if the user entered the correct login information.
             readLine = check.readline(0)
+            loginWorked = False                                                                                             # A variable that we will use for checking if the login was successful.
             for line in check:
-                if userUsername in line:                                                                                    # Checking if the user is in the current line in the users.txt file.
+                if userUsername in line or userUsername.lower() in line.lower():                                            # Checking if the user is in the current line in the users.txt file.
                     listData = line.split(":")                                                                              # Splitting the line in three different things, username:salt:password <- the password is salted using the salt before it.
                     saltPass = listData[1] + userPassword                                                                   # Checking if the password is correct by salting and hashing the given password.
                     hashHex = hashlib.sha512(saltPass.encode())
                     hash_sha512 = hashHex.hexdigest()
                     if hash_sha512 == listData[2].replace("\n", ""):                                                        # If the password matches the one in users.txt file, we welcome the user.
                         print("Hello " + listData[0] + "!")
+                        loginWorked = True                                                                                  # If the login was successful we set the loginWorked variable to True so we don't run into any issues after the loop stops.
                         readLine = check.readline()
-                    # Haven't done this yet + it doesn't work so I commented it out.
-                    #else:
-                    #    print("That user does not exist or you entered wrong credentials!")
+            if loginWorked == False:                                                                                        # Checks if the loginWorked variable is False. If it is, that means that the user either didn't type the correct password or that user doesn't exist.
+                print("That user does not exist or you entered the wrong credentials!")
     else:                                                                                                                   # If the client did not say 'y' or 'n', we tell them that that isn't an option.
         print("That's not an option!")
