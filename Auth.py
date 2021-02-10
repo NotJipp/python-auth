@@ -49,7 +49,7 @@ with open("users.txt", "r") as f:
             readLine = check.readline(0)
             loginWorked = False                                                                                             # A variable that we will use for checking if the login was successful.
             for line in check:
-                if userUsername in line or userUsername.lower() in line.lower():                                            # Checking if the user is in the current line in the users.txt file.
+                if userUsername.lower() in line.lower():                                                                    # Checking if the user is in the current line in the users.txt file.
                     listData = line.split(":")                                                                              # Splitting the line in three different things, username:salt:password <- the password is salted using the salt before it.
                     saltPass = listData[1] + userPassword                                                                   # Checking if the password is correct by salting and hashing the given password.
                     hashHex = hashlib.sha512(saltPass.encode())
